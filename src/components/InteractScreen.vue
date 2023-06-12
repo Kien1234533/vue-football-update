@@ -1,5 +1,38 @@
 <template>
   <div class="screen">
+    <div class="choose">
+      <h4>Choose time</h4>
+      <input
+        ref="disappear1"
+        type="radio"
+        value="30"
+        name="radio"
+        v-model="selectedOption"
+        @change="handleOptionChange"
+      />
+      <h5 ref="disappear2">30 seconds</h5>
+      <br />
+      <input
+        ref="disappear3"
+        type="radio"
+        value="90"
+        name="radio"
+        v-model="selectedOption"
+        @change="handleOptionChange"
+      />
+      <h5 ref="disappear4">90 seconds</h5>
+      <br />
+      <input
+        ref="disappear5"
+        type="radio"
+        value="180"
+        name="radio"
+        v-model="selectedOption"
+        @change="handleOptionChange"
+      />
+      <h5 ref="disappear6">180 seconds</h5>
+      <br />
+    </div>
     <div ref="boxParent" class="box">
       <h2>Game Over</h2>
       <span @click="goBack">Play again</span>
@@ -65,17 +98,32 @@ export default {
   },
   data() {
     return {
+      time: 0,
+      selectedOption: null,
       rules: [],
-      isShown: true,
+      isShown: false,
       countdownElement: "00: 00",
       timer: null,
       showElement: false,
     };
   },
-  mounted() {
-    this.countDown();
-  },
   methods: {
+    handleOptionChange() {
+      this.isShown = true;
+      this.countDown(this.selectedOption);
+      const x1 = this.$refs.disappear1;
+      const x2 = this.$refs.disappear2;
+      const x3 = this.$refs.disappear3;
+      const x4 = this.$refs.disappear4;
+      const x5 = this.$refs.disappear5;
+      const x6 = this.$refs.disappear6;
+      x1.setAttribute("style", "display: none");
+      x2.setAttribute("style", "display: none");
+      x3.setAttribute("style", "display: none");
+      x4.setAttribute("style", "display: none");
+      x5.setAttribute("style", "display: none");
+      x6.setAttribute("style", "display: none");
+    },
     goFlipFront() {},
     checkRule(card) {
       if (this.rules.length === 2) return false;
@@ -118,8 +166,8 @@ export default {
     goBack() {
       window.location.reload();
     },
-    countDown() {
-      let time = 6; // Thời gian ban đầu (số giây)
+    countDown(time) {
+      // Thời gian ban đầu (số giây)
       const intervalId = setInterval(() => {
         const minutes = Math.floor(time / 60);
         const seconds = time % 60;
@@ -147,69 +195,48 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.hourglass {
-  border-bottom: solid 1vmin #630;
-  border-top: solid 1vmin #630;
-  left: 50%;
-  margin-left: 77vmin;
-  margin-top: -20vmin;
-  padding: 0 1vmin;
+.choose {
+  position: absolute;
   position: fixed;
-  top: 50%;
+  font-size: 10px;
+  left: 50%;
+  top: 3%;
 }
-.hourglass .top,
-.hourglass .bottom {
-  background-color: #def;
-  box-shadow: 0 0 1vmin 1vmin #bcd inset;
-  height: 10vmin;
-  overflow: hidden;
-  position: relative;
-  width: 10vmin;
+h4 {
+  font-size: 10px;
 }
-.hourglass .top {
-  border-radius: 0 0 50% 50%;
-}
-.hourglass .top:before {
-  animation: top 60s linear forwards;
-  background-color: #fc6;
-  border-radius: 50%;
-  content: "";
-  display: block;
-  height: 10vmin;
-  left: 0;
+h1 {
+  font-size: 15px;
   position: absolute;
-  top: 0;
-  transform: translateY(50%);
-  width: 10vmin;
+  position: fixed;
+  top: 10px;
+  left: 20%;
 }
-.hourglass .bottom {
-  border-radius: 50% 50% 0 0;
+.img-back {
+  position: fixed;
+  width: 50px;
+  height: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 1;
 }
-.hourglass .bottom:before {
-  animation: bottom 60s linear forwards;
-  background-color: #fc6;
-  border-radius: 50%;
-  content: "";
-  display: block;
-  height: 10vmin;
-  left: 0;
+.box {
+  visibility: hidden;
+  z-index: 1;
   position: absolute;
-  top: 0;
-  transform: translateY(100%);
-  width: 10vmin;
+  position: fixed;
+  width: 250px;
+  height: 150px;
+  border: 1px solid #333;
+  top: 30%;
+  left: 23%;
+  border-radius: 20px;
+  background-color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0.8;
+  transition: transform 0.4s, top 0.4s;
+  transform: translateY(-70%) scale(0.1);
 }
-.hourglass .bottom:after {
-  animation: bottom-drip 120s linear forwards;
-  background-color: #fc6;
-  content: "";
-  display: block;
-  height: 100%;
-  left: 45%;
-  position: absolute;
-  top: 0;
-  width: 10%;
-}
-
 @keyframes bottom {
   0% {
     transform: translateY(100%);
@@ -241,52 +268,6 @@ export default {
     transform: translateY(0);
     width: 0;
   }
-}
-.screen {
-  width: 100%;
-  height: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  color: var(--light);
-}
-
-.screen__inner {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 2rem auto;
-}
-.img-back {
-  position: fixed;
-  width: 110px;
-  height: 30px;
-  cursor: pointer;
-  transition: 0.5s;
-}
-.img-back:hover {
-  filter: brightness(150%);
-}
-.img-front {
-  position: absolute;
-  width: 70px;
-  height: 100px;
-  top: 40%;
-  right: 100px;
-  position: fixed;
-  transition: 0.5s;
-}
-p {
-  color: #333;
-  right: 115px;
-  top: 58%;
-  position: absolute;
-  position: fixed;
-}
-.img-front {
-  cursor: pointer;
-  animation: shake 2s;
-  animation-iteration-count: infinite;
 }
 @keyframes shake {
   0% {
@@ -323,49 +304,206 @@ p {
     transform: translate(0, 0) rotate(0);
   }
 }
-h1 {
-  font-size: 80px;
-  position: absolute;
-  position: fixed;
-  top: 50px;
-  left: 83%;
+.screen {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  color: var(--light);
+  overflow: scroll;
+}
+.screen__inner {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+  transform: scale(0.45, 0.45);
 }
 h2 {
-  font-size: 50px;
+  font-size: 20px;
   text-align: center;
-  line-height: 400px;
+  line-height: 150px;
   color: #fff;
-}
-.box {
-  visibility: hidden;
-  z-index: 1;
-  position: absolute;
-  position: fixed;
-  width: 600px;
-  height: 400px;
-  border: 1px solid #333;
-  top: 15%;
-  left: 25.5%;
-  border-radius: 20px;
-  background-color: #333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  opacity: 0.8;
-  transition: transform 0.4s, top 0.4s;
-  transform: translateY(-70%) scale(0.1);
 }
 span {
   position: absolute;
-  bottom: 70px;
+  bottom: 25px;
   border: 1px solid #fff;
   border-radius: 20px;
-  font-size: 20px;
+  font-size: 10px;
   cursor: pointer;
-  padding: 10px 28px;
+  padding: 3px 10px;
   left: 39%;
 }
 
-span:hover {
-  color: #333;
-  background-color: #fff;
+@media (min-width: 992px) {
+  .choose {
+    position: absolute;
+    left: 10%;
+    font-size: 20px;
+  }
+  h5 {
+    display: block;
+  }
+  h4 {
+    font-size: 30px;
+  }
+  input {
+    display: block;
+  }
+  .hourglass {
+    border-bottom: solid 1vmin #630;
+    border-top: solid 1vmin #630;
+    left: 50%;
+    margin-left: 77vmin;
+    margin-top: -20vmin;
+    padding: 0 1vmin;
+    position: fixed;
+    top: 50%;
+  }
+  .hourglass .top,
+  .hourglass .bottom {
+    background-color: #def;
+    box-shadow: 0 0 1vmin 1vmin #bcd inset;
+    height: 10vmin;
+    overflow: hidden;
+    position: relative;
+    width: 10vmin;
+  }
+  .hourglass .top {
+    border-radius: 0 0 50% 50%;
+  }
+  .hourglass .top:before {
+    animation: top 60s linear forwards;
+    background-color: #fc6;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 10vmin;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: translateY(50%);
+    width: 10vmin;
+  }
+  .hourglass .bottom {
+    border-radius: 50% 50% 0 0;
+  }
+  .hourglass .bottom:before {
+    animation: bottom 60s linear forwards;
+    background-color: #fc6;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 10vmin;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: translateY(100%);
+    width: 10vmin;
+  }
+  .hourglass .bottom:after {
+    animation: bottom-drip 120s linear forwards;
+    background-color: #fc6;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 45%;
+    position: absolute;
+    top: 0;
+    width: 10%;
+  }
+  .screen {
+    overflow: visible;
+    width: 100%;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    color: var(--light);
+  }
+
+  .screen__inner {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem auto;
+    transform: scale(1, 1);
+  }
+  .img-back {
+    width: 110px;
+    height: 30px;
+    transition: 0.5s;
+    margin-top: 0px;
+  }
+  .img-back:hover {
+    filter: brightness(150%);
+  }
+  .img-front {
+    position: absolute;
+    width: 70px;
+    height: 100px;
+    top: 40%;
+    right: 100px;
+    position: fixed;
+    transition: 0.5s;
+  }
+  p {
+    color: #333;
+    right: 115px;
+    top: 58%;
+    position: absolute;
+    position: fixed;
+  }
+  .img-front {
+    cursor: pointer;
+    animation: shake 2s;
+    animation-iteration-count: infinite;
+  }
+  h1 {
+    font-size: 80px;
+    position: absolute;
+    position: fixed;
+    top: 50px;
+    left: 83%;
+  }
+  h2 {
+    font-size: 50px;
+    text-align: center;
+    line-height: 400px;
+    color: #fff;
+  }
+  .box {
+    visibility: hidden;
+    z-index: 1;
+    position: absolute;
+    position: fixed;
+    width: 600px;
+    height: 400px;
+    border: 1px solid #333;
+    top: 15%;
+    left: 25.5%;
+    border-radius: 20px;
+    background-color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 0.8;
+    transition: transform 0.4s, top 0.4s;
+    transform: translateY(-70%) scale(0.1);
+  }
+  span {
+    position: absolute;
+    bottom: 70px;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 28px;
+    left: 39%;
+  }
+
+  span:hover {
+    color: #333;
+    background-color: #fff;
+  }
 }
 </style>

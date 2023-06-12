@@ -91,22 +91,13 @@ export default {
   background-position: center;
   background-size: cover;
   width: 100%;
-  height: 155vh;
 }
 nav {
   position: absolute;
   position: fixed;
-  height: 50px;
   top: 10px;
   right: 10px;
 }
-i {
-  top: 10px;
-  right: 10px;
-  font-size: 1.6rem;
-  cursor: pointer;
-}
-
 .icon-sun {
   color: #fcda5f;
 }
@@ -115,8 +106,22 @@ i {
 }
 .theme-dark {
   color: var(--light);
-  background-image: linear-gradient(0, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+  background: var(--dark);
   background-position: center;
   background-size: cover;
+}
+@media (min-width: 992px) {
+  .bg-all {
+    height: 155vh;
+  }
+  nav {
+    height: 50px;
+  }
+  i {
+    top: 10px;
+    right: 10px;
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
 }
 </style>

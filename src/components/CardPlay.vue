@@ -100,8 +100,8 @@ export default {
   transform-style: preserve-3d;
   cursor: pointer;
   position: relative;
+  transform: scale(0.8, 0.8);
 }
-
 .card.disabled .card__inner {
   cursor: default;
 }
@@ -136,5 +136,57 @@ export default {
 }
 .hidden {
   visibility: hidden;
+}
+@media (min-width: 992px) {
+  .card {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+  .card__inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    position: relative;
+    transform: scale(1, 1);
+  }
+
+  .card.disabled .card__inner {
+    cursor: default;
+  }
+  .card__inner.is-flipped {
+    transform: rotateY(-180deg);
+  }
+  .card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.3);
+  }
+  .card__face--front .card-content {
+    background: url("../assets/images/icon_lion.png") no-repeat center center;
+    width: 100%;
+    height: 100%;
+  }
+  .card__face--back {
+    background: var(--light);
+    transform: rotateY(-180deg);
+  }
+  .card__face--back .card-content {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+  }
+  .hidden {
+    visibility: hidden;
+  }
 }
 </style>

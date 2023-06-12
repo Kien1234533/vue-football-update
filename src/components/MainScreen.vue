@@ -62,67 +62,99 @@ export default {
 
 <style lang="css" scoped>
 .screen {
-  width: 100%;
-  position: fixed;
-  height: 0;
-  top: 0;
-  left: 0;
+  color: var(--light);
   z-index: 2;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: var(--light);
 }
 .text {
-  top: 100px;
   position: absolute;
   text-align: center;
+  top: 50px;
+  left: 0;
+  right: 0;
 }
-
 .screen h1 {
-  font-size: 4.5rem;
+  margin-left: 100px;
   text-transform: uppercase;
+  font-size: 1rem;
 }
 .screen p {
-  font-size: 2rem;
+  margin-left: 100px;
+  font-size: 0.6rem;
 }
-
 .modes {
-  display: flex;
-  margin-top: 60%;
+  display: block;
+  transform: translateY(90px);
 }
-
 .modes button {
+  margin-left: 100px;
+  margin-top: 10px;
+  width: 160px;
+  height: 70px;
+  display: flex;
   font: var(--font);
-  width: 150px;
-  height: 150px;
+  padding: 10px 5px;
+  border-radius: 10px;
   background: transparent;
   box-shadow: none;
-  border: 1px solid var(--light);
-  color: var(--light);
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-  margin: 0 1rem;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border: 1px solid var(--light);
+  color: var(--light);
+  flex-direction: column;
   transition: background 0.3s ease-in-out;
 }
+@media (min-width: 992px) {
+  .screen {
+    width: 100%;
+    height: 0;
+    top: 0;
+    left: 0;
+  }
+  .text {
+    top: 100px;
+  }
+  .screen h1 {
+    margin-left: 0px;
+    font-size: 4.5rem;
+  }
+  .screen p {
+    margin-left: 0px;
+    font-size: 2rem;
+  }
 
-.modes button:hover {
-  background-color: var(--light);
-  color: var(--dark);
-}
+  .modes {
+    display: flex;
+    transform: translateY(0px);
+    margin-top: 60%;
+  }
 
-.modes button span:first-child {
-  font-size: 2rem;
-}
+  .modes button {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    border-radius: 1rem;
+    margin: 0 1rem;
+  }
 
-.modes button span:last-child {
-  display: block;
-  font-size: 1.25rem;
-  margin-top: 0.5rem;
+  .modes button:hover {
+    background-color: var(--light);
+    color: var(--dark);
+  }
+
+  .modes button span:first-child {
+    font-size: 2rem;
+  }
+
+  .modes button span:last-child {
+    display: block;
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+  }
 }
 </style>
